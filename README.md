@@ -1,5 +1,3 @@
-# terraform-jenkins-aws-ec2-pipeline
-
 # 🚀 Terraform + Jenkins AWS EC2 Pipeline
 
 ## 📌 Project Overview
