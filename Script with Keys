@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_ACCESS_KEY_ID = ''
+        AWS_SECRET_ACCESS_KEY = ''
+        AWS_DEFAULT_REGION = 'ap-south-1'
+    }
+
+    stages {
+
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/varungucpc007/Terraform-jenkins-aws-ec2-pipeline.git'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                // Force clean init every time
+                bat 'terraform init -reconfigure'
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                bat 'terraform validate'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                bat 'terraform plan -input=false'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                bat 'terraform apply -auto-approve -input=false'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: EC2 created 🎉'
+        }
+        failure {
+            echo 'FAILED ❌ Check logs'
+        }
+        always {
+            echo 'Pipeline completed'
+        }
+    }
+}
