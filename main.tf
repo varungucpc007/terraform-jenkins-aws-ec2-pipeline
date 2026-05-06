@@ -4,6 +4,6 @@ resource "aws_instance" "my_ec2" {
   key_name      = var.key_name
 
   tags = {
-    Name = "Terraform-Jenkins-EC2"
+    Name = "Bhagat-Varun-Terraform-Jenkins-EC2"
   }
 }
